@@ -13,7 +13,12 @@ UltimatePSUR (PROXY SCRAPING UTILIZATION ROTATION) is a comprehensive Python lib
 
 Install UltimatePSUR using pip:
 pip install ultimatePSUR
-Copy
+
+## Donation
+- if you want to support me you could use this link : https://linkjust.com/helpme
+- this will help me a lot  THANKS!!!
+
+
 ## Usage
 
 Here's a quick example:
@@ -37,17 +42,4 @@ if response:
     print(response.text)
 else:
     print("Failed to fetch the URL")
----------------------------------------------
 
-## Donation
-- if you want to support me you could use this link : https://linkjust.com/helpme
-- this will help me a lot  THANKS!!!
-
-
-## Logic
-The library includes basic logic for:
-- Scraping proxies from multiple sources
-- Filtering invalid proxies
-- Checking if proxies are working
-- Rotating through the proxy list
-- Using proxies to make requests with retries
