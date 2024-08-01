@@ -37,17 +37,14 @@ if response:
     print(response.text)
 else:
     print("Failed to fetch the URL")
-Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-License
-This project is licensed under the MIT License.
-Copy
-7. `requirements.txt`:
-requests==2.26.0
-beautifulsoup4==4.10.0
-Copy
-This structure and these files provide a basic implementation of the UltimatePSUR library. The `ProxyScraper` class handles scraping proxies from various sources. The `ProxyManager` class manages the proxy list, including updating and filtering working proxies. The `ProxyRotator` class provides methods for rotating proxies and using them to make requests.
+---------------------------------------------
 
+## Donation
+- if you want to support me you could use this link : https://linkjust.com/helpme
+- this will help me a lot  THANKS!!!
+
+
+## Logic
 The library includes basic logic for:
 - Scraping proxies from multiple sources
 - Filtering invalid proxies
