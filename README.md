@@ -1,4 +1,6 @@
-# UltimatePSUR: Ultimate Proxy Scraper, Updater, and Rotator
+# this Project will be Abonaded from 
+This project will become abandoned. I do not think that I will make any updates or solve the problems. I will consider this version number V2 to be the last.
+# UltimatePSUR2 : Ultimate Proxy Scraper, Updater, and Rotator
 
 UltimatePSUR is a powerful and flexible Python library for scraping, updating, and rotating proxies. It's designed to seamlessly integrate with your web scraping and automation projects.
 
