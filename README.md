@@ -43,7 +43,6 @@ async def main():
         print("Failed to make a request using proxies")
 
 asyncio.run(main())
-Advanced Usage
 Custom Configuration
 Create a config.json file to customize proxy sources and APIs:
 json{
@@ -148,7 +147,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 ------------------------
-## Bonus Examples
+## Bonus examples
 # Example 1: Scraping proxies and using them with rotation
 ```python
 import asyncio
