@@ -75,9 +75,9 @@ json{
     }
 }
 Then initialize the ProxyRotator with the config file:
-pythonrotator = ProxyRotator(config_file="path/to/your/config.json")
+rotator = ProxyRotator(config_file="path/to/your/config.json")
 Using Proxies in Web Scraping
-pythonimport aiohttp
+import aiohttp
 import asyncio
 from ultimatePSUR import ProxyRotator
 
@@ -137,7 +137,7 @@ async def main():
 
 asyncio.run(main())
 Saving and Loading Proxies
-python# Save proxies to a file
+# Save proxies to a file
 await rotator.manager.update_proxies()
 rotator.manager.save_proxies("my_proxies.txt")
 
