@@ -1,40 +1,47 @@
-import threading
-import time
-import requests
+import asyncio
+import aiohttp
+import random
+from typing import List, Optional
 from .scraper import ProxyScraper
 
 class ProxyManager:
-    def __init__(self, update_interval=1800):
-        self.proxies = []
-        self.update_interval = update_interval
-        self.scraper = ProxyScraper()
-        self._update_thread = threading.Thread(target=self._auto_update, daemon=True)
-        self._update_thread.start()
+    def __init__(self, config_file: str = "config.json"):
+        self.scraper = ProxyScraper(config_file)
+        self.proxies: List[str] = []
+        self.lock = asyncio.Lock()
 
-    def _auto_update(self):
-        while True:
-            self.update_proxies()
-            time.sleep(self.update_interval)
+    async def update_proxies(self):
+        async with self.lock:
+            self.proxies = await self.scraper.scrape()
+            self.proxies = await self._filter_working_proxies(self.proxies)
 
-    def update_proxies(self):
-        new_proxies = self.scraper.scrape()
-        self.proxies = self._filter_working_proxies(new_proxies)
+    async def _filter_working_proxies(self, proxies: List[str]) -> List[str]:
+        async def check_proxy(proxy):
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get('http://httpbin.org/ip', proxy=f"http://{proxy}", timeout=5) as response:
+                        return proxy if response.status == 200 else None
+            except:
+                return None
 
-    def _filter_working_proxies(self, proxies):
-        working_proxies = []
-        for proxy in proxies:
-            if self._check_proxy(proxy):
-                working_proxies.append(proxy)
-        return working_proxies
+        tasks = [check_proxy(proxy) for proxy in proxies]
+        results = await asyncio.gather(*tasks)
+        return [proxy for proxy in results if proxy]
 
-    def _check_proxy(self, proxy):
+    async def get_proxy(self) -> Optional[str]:
+        async with self.lock:
+            return random.choice(self.proxies) if self.proxies else None
+
+    def save_proxies(self, filename: str = "proxies.txt"):
+        with open(filename, "w") as f:
+            f.write("\n".join(self.proxies))
+
+    @classmethod
+    async def load_proxies(cls, filename: str = "proxies.txt") -> 'ProxyManager':
+        manager = cls()
         try:
-            response = requests.get('http://httpbin.org/ip', proxies={'http': proxy, 'https': proxy}, timeout=5)
-            return response.status_code == 200
-        except:
-            return False
-
-    def get_proxy(self):
-        if not self.proxies:
-            self.update_proxies()
-        return self.proxies[0] if self.proxies else None
+            with open(filename, "r") as f:
+                manager.proxies = [line.strip() for line in f]
+        except FileNotFoundError:
+            await manager.update_proxies()
+        return manager

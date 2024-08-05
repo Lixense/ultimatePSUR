@@ -1,5 +1,7 @@
-from .scraper import ProxyScraper
 from .manager import ProxyManager
 from .rotator import ProxyRotator
+from .scraper import ProxyScraper
 
-__all__ = ['ProxyScraper', 'ProxyManager', 'ProxyRotator']
+__version__ = "2"
+
+__all__ = ['ProxyManager', 'ProxyRotator', 'ProxyScraper']
